@@ -18,7 +18,7 @@
 4. **What investor contributes the most to biotech companies in the United States?**
 5. **What is the average Series A investment amount for biotech companies in California?**
 6. **What is the median Series A investment amount for biotech companies in California?**
-7. **What percentage of companies which received a Series A are operating? **
+7. **What percentage of companies which received a Series A are operating?**
 8. **What percentage of companies which received a Series A were acquired?**
 
 ## Part 2
