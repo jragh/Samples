@@ -1,19 +1,21 @@
-import numpy as np
+#import numpy as np
 import pandas as pd
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
 from dash.exceptions import PreventUpdate
 import csv
-import io
-import requests
+#import io
+#import requests
 from dash.dependencies import Input, Output, State
 from iexfinance.refdata import get_symbols
 from iexfinance.stocks import Stock
+import pyEX
 
 token = ''
 #a = get_symbols(output_format='pandas', token=token)
 a = pd.read_csv(r'C:\Users\Jordan\Desktop\Github\stock_symbols.csv')
+b = pyEX.bulkBatch(pyEX.symbolsList(), ['chart'], '6m')
 
 search_dict = [{'label': """{0}: {1}""".format(a.loc[i, 'symbol'], a.loc[i, 'name']), 'value': """{0}""".format(a.loc[i, 'symbol'])} for i in a.index]
 stock_header_dict = {}
@@ -57,6 +59,15 @@ def generate_header(dd_input2):
 	q_display = sym.get_quote()
 	#stock_header_dict[dd_input2] = {k: v for k, v in q_display.items() if k in ['symbol', 'open', 'close', 'high', 'low', 'latestPrice', 'latestVolume', 'companyName']}
 	return """{0} ({1})""".format(q_display['companyName'], q_display['symbol']), """Latest Price Sold: {0}""".format(q_display['latestPrice']), """Open Price: {0}""".format(q_display['open']), """Close Price: {0}""".format(q_display['close']),"""High Price: {0}""".format(q_display['high']), """Low Price: {0}""".format(q_display['low']), """Latest Volume Traded: {0}""".format(q_display['latestVolume'])
+
+
+@app.callback(
+	Output('candlestick-main', 'children'),
+	[Input('stock-dropdown','value')])
+def generate_candlestick(dd_input3):
+	if dd_input3 is None:
+		raise PreventUpdate
+	
 
 
 if __name__ == '__main__':
